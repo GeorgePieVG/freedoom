@@ -19,10 +19,92 @@
 #undef PHASE1
 #endif
 
+; if building Phase 1 iwad
+#ifdef PHASE1
+
+#define P1_LEVELS
+#define P1_LUMPS
+#define P1_TEXTURES
+#define P1_MUSICS
+#define P1_GRAPHICS
+
+#define CORE_LUMPS
+#define CORE_SOUNDS
+#define CORE_GRAPHICS
+#define CORE_SPRITES
+#define CORE_FLATS
+
+#define EXTRA_TEXTURES ; unused for now
+#define EXTRA_FLATS
+
+#endif
+
+; if building Phase 2 iwad
+#ifdef PHASE2
+
+#define P2_LEVELS
+#define P2_LUMPS
+#define P2_TEXTURES
+#define P2_MUSICS
+#define P2_GRAPHICS
+#define P2_SPRITES
+
+#define CORE_LUMPS
+#define CORE_SOUNDS
+#define CORE_GRAPHICS
+#define CORE_SPRITES
+#define CORE_FLATS
+
+#define EXTRA_FLATS
+
+#endif
+
+; if building FreeDM iwad
+#ifdef PHASE2
+
+#define FDM_LEVELS
+#define FDM_LUMPS
+#define FDM_TEXTURES
+#define FDM_MUSICS
+#define FDM_GRAPHICS
+#define P2_SPRITES
+
+#define CORE_LUMPS
+#define CORE_SOUNDS
+#define CORE_GRAPHICS
+#define CORE_SPRITES
+#define CORE_FLATS
+
+#define EXTRA_FLATS
+
+#endif
+
+; if building Phase 1 maps only
+#ifdef P1_MAPSONLY
+
+#define P1_LEVELS
+#define P1_LUMPS
+#define P1_TEXTURES
+
+#define EXTRA_FLATS
+
+#endif
+
+; if building Phase 2 maps only
+#ifdef P2_MAPSONLY
+
+#define P2_LEVELS
+#define P2_LUMPS
+#define P2_TEXTURES
+
+#define EXTRA_FLATS
+
+#endif
+
 ; List of levels
 [levels]
 
-#ifndef PHASE2
+#ifndef P2_LEVELS
 E1M1
 E1M2
 E1M3
@@ -62,7 +144,7 @@ E4M9
 
 #else /* #ifndef PHASE2 */
 
-#ifdef FREEDM
+#ifdef FDM_LEVELS
 
 MAP01   = dm01
 MAP02   = dm02
@@ -99,6 +181,7 @@ MAP32   = dm32
 
 #else   /* #ifdef FREEDM */
 
+#ifdef P2_LEVELS
 MAP01
 MAP02
 MAP03
@@ -132,39 +215,36 @@ MAP30
 MAP31
 MAP32
 
+#endif
+
 #endif /* #ifdef FREEDM */
 
 #endif /* #ifndef PHASE2 */
 
 ; List of data Lumps
 [lumps]
+#ifdef CORE_LUMPS
+
 PLAYPAL
 COLORMAP
 GENMIDI
 FREEDOOM
 
+#endif
+
 ; Big font used by ZDoom-based ports for menu text.
 DBIGFONT
 
-#ifdef FREEDM
+#ifdef FDM_LUMPS
 DEHACKED = fdm_deh
-UMAPINFO = fdmuminf
-GAMECONF = fdmgconf
-WADINFO = fdmwdinf
-ZMAPINFO = fdmzminf
+ZMAPINFO = fdmmpinf
 ENDOOM = endoomdm
 FREEDM
 #else
 #ifdef PHASE1
 DEHACKED = p1_deh
-UMAPINFO = p1_uminf
-GAMECONF = p1_gconf
-WADINFO = p1_wdinf
 #else
 DEHACKED = p2_deh
-UMAPINFO = p2_uminf
-GAMECONF = p2_gconf
-WADINFO = p2_wdinf
 #endif
 ENDOOM
 #endif
@@ -222,6 +302,8 @@ PNAMES   = fd2pname
 
 ; List of Sounds
 [sounds]
+#ifdef CORE_SOUNDS
+
 DSPISTOL
 DSSHOTGN
 DSSGCOCK
@@ -290,6 +372,8 @@ DSSPIDTH
 DSHOOF
 DSMETAL
 
+#endif
+
 #ifdef PHASE2
 DSDSHTGN
 DSDBOPN
@@ -338,6 +422,8 @@ DSOUCH ; hit head on ceiling (Doom Legacy only)
 DSJUMP
 
 ; pc speaker effects
+
+#ifdef CORE_SOUNDS
 
 DPPISTOL
 DPSHOTGN
@@ -406,6 +492,8 @@ DPCYBDTH
 DPSPIDTH
 DPHOOF
 DPMETAL
+
+#endif
 
 #ifdef PHASE2
 DPDSHTGN
